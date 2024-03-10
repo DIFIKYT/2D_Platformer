@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class EnemyController : MonoBehaviour
 {
@@ -7,8 +6,8 @@ public class EnemyController : MonoBehaviour
 
     [SerializeField] private Transform _pointA;
     [SerializeField] private Transform _pointB;
-    [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private Animator _animator;
+    [SerializeField] private float _moveSpeed = 5f;
 
     private bool _isLookRight = true;
     private Transform _currentTarget;
@@ -16,38 +15,37 @@ public class EnemyController : MonoBehaviour
     private void Start()
     {
         _currentTarget = _pointB;
-        AnimateRun();
+        SetTarget(_currentTarget);
     }
 
     private void Update()
     {
         Move();
-        AnimateRun();
     }
 
     private void Move()
     {
-        Vector3 direction = _currentTarget.position - transform.position;
-        direction.Normalize();
-
-        transform.Translate(direction * _moveSpeed * Time.deltaTime);
-
-        if (Vector3.Distance(transform.position, _currentTarget.position) < 0.1f)
+        if (Vector2.Distance(transform.position, _currentTarget.position) < 0.01f)
             SwitchTarget();
+
+        Vector2 newPosition = Vector2.MoveTowards(transform.position, _currentTarget.position, _moveSpeed * Time.deltaTime);
+        transform.position = newPosition;
     }
 
     private void SwitchTarget()
     {
-        if (_currentTarget == _pointA)
-        {
-            _currentTarget = _pointB;
+        _currentTarget = (_currentTarget == _pointA) ? _pointB : _pointA;
+
+        SetTarget(_currentTarget);
+        AnimateRun();
+    }
+
+    private void SetTarget(Transform target)
+    {
+        if (transform.position.x < target.position.x)
             _isLookRight = true;
-        }
         else
-        {
-            _currentTarget = _pointA;
             _isLookRight = false;
-        }
     }
 
     private void AnimateRun()

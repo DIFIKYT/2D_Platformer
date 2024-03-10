@@ -5,18 +5,31 @@ public class PlayerController : MonoBehaviour
     private const string AnimMoveXParameter = "AnimMoveX";
     private const string HorizontalAxis = "Horizontal";
 
-    [SerializeField] private float _moveSpeed = 5f;
-    [SerializeField] private float _jumpForce = 5f;
     [SerializeField] private Rigidbody2D _rigibody;
     [SerializeField] private Animator _animator;
+    [SerializeField] private float _moveSpeed;
+    [SerializeField] private float _jumpForce;
 
     private bool _isGrounded;
+    private int _coinsCount = 0;
 
     private void Update()
     {
         Move();
         Jump();
         AnimateMove();
+    }
+
+    private void OnEnable()
+    {
+        GroundChecker.ActionGrounded += SetGrounded;
+        Coin.ActionTakedCoin += TakeCoin;
+    }
+
+    private void OnDisable()
+    {
+        GroundChecker.ActionGrounded -= SetGrounded;
+        Coin.ActionTakedCoin -= TakeCoin;
     }
 
     private void Move()
@@ -31,16 +44,6 @@ public class PlayerController : MonoBehaviour
             _rigibody.velocity = new Vector2(_rigibody.velocity.x, _jumpForce);
     }
 
-    private void OnEnable()
-    {
-        GroundChecker.ActionGrounded += SetGrounded;
-    }
-
-    private void OnDisable()
-    {
-        GroundChecker.ActionGrounded -= SetGrounded;
-    }
-
     private void SetGrounded(bool isGrounded)
     {
         _isGrounded = isGrounded;
@@ -49,5 +52,12 @@ public class PlayerController : MonoBehaviour
     private void AnimateMove()
     {
         _animator.SetFloat(AnimMoveXParameter, Input.GetAxis(HorizontalAxis));
+    }
+
+    private void TakeCoin()
+    {
+        _coinsCount++;
+
+        Debug.Log("подобрана монета, кол-во монет - " + _coinsCount);
     }
 }
