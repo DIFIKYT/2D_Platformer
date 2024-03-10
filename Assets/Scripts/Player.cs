@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class Player : MonoBehaviour
 {
     private const string AnimMoveXParameter = "AnimMoveX";
     private const string HorizontalAxis = "Horizontal";

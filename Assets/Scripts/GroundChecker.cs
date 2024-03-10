@@ -9,13 +9,13 @@ public class GroundChecker : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.CompareTag(GroundTag))
+        if (collider.GetComponent<Ground>())
             ActionGrounded?.Invoke(true);
     }
 
     private void OnTriggerExit2D(Collider2D collider)
     {
-        if (collider.gameObject.CompareTag(GroundTag))
+        if (collider.GetComponent<Ground>())
             ActionGrounded?.Invoke(false);
     }
 }

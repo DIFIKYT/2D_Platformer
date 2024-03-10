@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     private const string IsLookRightParameter = "IsLookRight";
 
@@ -42,10 +42,7 @@ public class EnemyController : MonoBehaviour
 
     private void SetTarget(Transform target)
     {
-        if (transform.position.x < target.position.x)
-            _isLookRight = true;
-        else
-            _isLookRight = false;
+        _isLookRight = (transform.position.x < target.position.x) ? true : false;
     }
 
     private void AnimateRun()
