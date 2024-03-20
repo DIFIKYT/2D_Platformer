@@ -17,7 +17,7 @@ public class CoinSpawner : MonoBehaviour
     {
         List<Transform> coinSpawnpoints = _coinSpawnpoints;
 
-        for(int i = 0;  i < _countCoins; i++)
+        for (int i = 0; i < _countCoins; i++)
         {
             Transform spawnpoint = coinSpawnpoints[Random.Range(0, _coinSpawnpoints.Count)];
             Coin coin = Instantiate(_coinPrefab, spawnpoint.position, spawnpoint.rotation);
