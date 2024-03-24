@@ -58,6 +58,6 @@ public class Player : MonoBehaviour
     {
         _coinsCount++;
 
-        Debug.Log("подобрана монета, кол-во монет - " + _coinsCount);
+        ViewInfo.DisplayCoinsInfo(_coinsCount);
     }
 }
