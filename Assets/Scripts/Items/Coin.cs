@@ -3,14 +3,14 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    public static event Action ActionTakedCoin;
+    public static event Action TakedCoin;
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.TryGetComponent<Player>(out Player player))
         {
             RemoveCoin();
-            ActionTakedCoin?.Invoke();
+            TakedCoin?.Invoke();
         }
     }
 

@@ -1,26 +1,25 @@
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Character
 {
     private const string IsLookRightParameter = "IsLookRight";
 
     [SerializeField] private Transform _pointA;
     [SerializeField] private Transform _pointB;
-    [SerializeField] private Animator _animator;
-    [SerializeField] private float _moveSpeed = 5f;
 
     private bool _isLookRight = true;
     private Transform _currentTarget;
 
-    private void Start()
-    {
-        _currentTarget = _pointB;
-        SetTarget(_currentTarget);
-    }
-
     private void Update()
     {
         Move();
+    }
+
+    private void Start()
+    {
+        ViewInfo.DisplayHealth(_name, _health.CurrentHealth);
+        _currentTarget = _pointB;
+        SetTarget(_currentTarget);
     }
 
     private void Move()

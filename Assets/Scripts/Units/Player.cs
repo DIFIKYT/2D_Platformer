@@ -1,17 +1,15 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Character
 {
     private const string AnimMoveXParameter = "AnimMoveX";
     private const string HorizontalAxis = "Horizontal";
 
     [SerializeField] private Rigidbody2D _rigibody;
-    [SerializeField] private Animator _animator;
-    [SerializeField] private float _moveSpeed;
-    [SerializeField] private float _jumpForce;
+    [SerializeField, Min(1)] private float _jumpForce;
 
-    private bool _isGrounded;
     private int _coinsCount = 0;
+    private bool _isGrounded;
 
     private void Update()
     {
@@ -20,16 +18,23 @@ public class Player : MonoBehaviour
         AnimateMove();
     }
 
+    private void Start()
+    {
+        ViewInfo.DisplayHealth(_name, _health.CurrentHealth);
+    }
+
     private void OnEnable()
     {
-        GroundChecker.ActionGrounded += SetGrounded;
-        Coin.ActionTakedCoin += TakeCoin;
+        GroundChecker.Grounded += SetGrounded;
+        Coin.TakedCoin += TakeCoin;
+        Medkit.TakedMedkit += UseMedkit;
     }
 
     private void OnDisable()
     {
-        GroundChecker.ActionGrounded -= SetGrounded;
-        Coin.ActionTakedCoin -= TakeCoin;
+        GroundChecker.Grounded -= SetGrounded;
+        Coin.TakedCoin -= TakeCoin;
+        Medkit.TakedMedkit -= UseMedkit;
     }
 
     private void Move()
@@ -57,7 +62,11 @@ public class Player : MonoBehaviour
     private void TakeCoin()
     {
         _coinsCount++;
-
         ViewInfo.DisplayCoinsInfo(_coinsCount);
+    }
+
+    private void UseMedkit(int healingPower)
+    {
+        RestoreHealth(healingPower);
     }
 }
