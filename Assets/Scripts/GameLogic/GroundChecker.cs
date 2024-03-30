@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GroundChecker : MonoBehaviour
 {
-    public static event Action<bool> Grounded;
+    public event Action<bool> Grounded;
 
     private void OnTriggerEnter2D(Collider2D collider)
     {

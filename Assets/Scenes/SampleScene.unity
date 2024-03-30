@@ -169,6 +169,8 @@ GameObject:
   - component: {fileID: 123049414}
   - component: {fileID: 123049419}
   - component: {fileID: 123049420}
+  - component: {fileID: 123049421}
+  - component: {fileID: 123049422}
   m_Layer: 0
   m_Name: FirstEnemy
   m_TagString: Enemy
@@ -349,12 +351,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a42d39fe5fd3b83468648bee0be73cce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 123049420}
-  _animator: {fileID: 123049414}
-  _moveSpeed: 5
   _name: ENEMY 1
-  _pointA: {fileID: 1121132554}
-  _pointB: {fileID: 1266607943}
+  _health: {fileID: 123049420}
+  _enemyMover: {fileID: 0}
 --- !u!114 &123049420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,6 +367,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 50
+--- !u!114 &123049421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123049407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e86bc08cfa58dd94fa45f094801863a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveSpeed: 5
+  _animator: {fileID: 123049414}
+  _pointA: {fileID: 1121132554}
+  _pointB: {fileID: 1266607943}
+--- !u!114 &123049422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123049407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddd0f7fe1b79d3943833ed103a4c7243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 123049414}
 --- !u!1 &217495445
 GameObject:
   m_ObjectHideFlags: 0
@@ -633,6 +661,8 @@ GameObject:
   - component: {fileID: 471468308}
   - component: {fileID: 471468313}
   - component: {fileID: 471468314}
+  - component: {fileID: 471468315}
+  - component: {fileID: 471468316}
   m_Layer: 0
   m_Name: SecondEnemy
   m_TagString: Enemy
@@ -813,12 +843,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a42d39fe5fd3b83468648bee0be73cce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 471468314}
-  _animator: {fileID: 471468308}
-  _moveSpeed: 5
   _name: ENEMY 2
-  _pointA: {fileID: 833522015}
-  _pointB: {fileID: 901856629}
+  _health: {fileID: 471468314}
+  _enemyMover: {fileID: 0}
 --- !u!114 &471468314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -832,6 +859,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 50
+--- !u!114 &471468315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471468301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e86bc08cfa58dd94fa45f094801863a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveSpeed: 5
+  _animator: {fileID: 471468308}
+  _pointA: {fileID: 833522015}
+  _pointB: {fileID: 901856629}
+--- !u!114 &471468316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471468301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddd0f7fe1b79d3943833ed103a4c7243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 471468308}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1014,7 +1070,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e234a259b7cd09946af58c2fee258604, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damageAmount: 25
+  _damageAmount: 30
 --- !u!1 &643661709
 GameObject:
   m_ObjectHideFlags: 0
@@ -5554,8 +5610,11 @@ GameObject:
   - component: {fileID: 1838018138}
   - component: {fileID: 1838018132}
   - component: {fileID: 1838018137}
-  - component: {fileID: 1838018139}
+  - component: {fileID: 1838018144}
   - component: {fileID: 1838018140}
+  - component: {fileID: 1838018142}
+  - component: {fileID: 1838018143}
+  - component: {fileID: 1838018141}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5725,24 +5784,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.48447514, y: 0.87596846}
   m_EdgeRadius: 0
---- !u!114 &1838018139
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1838018131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3b1f5672a38b6f4b807f427263681a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _health: {fileID: 1838018140}
-  _animator: {fileID: 1838018137}
-  _moveSpeed: 5
-  _name: PLAYER
-  _rigibody: {fileID: 1838018132}
-  _jumpForce: 5
 --- !u!114 &1838018140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5756,6 +5797,63 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 100
+--- !u!114 &1838018141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838018131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df4f3de912ee53449b40d220170616ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 1838018137}
+--- !u!114 &1838018142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838018131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04ba86b91058fda4e82451caa51185e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1838018143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838018131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61e7e28d26ffdc7469885453903da977, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveSpeed: 5
+  _jumpForce: 5
+  _rigibody: {fileID: 1838018132}
+--- !u!114 &1838018144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838018131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3b1f5672a38b6f4b807f427263681a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: PLAYER
+  _health: {fileID: 1838018140}
+  _playerBag: {fileID: 1838018142}
+  _playerMover: {fileID: 1838018143}
+  _playerAnimation: {fileID: 1838018141}
 --- !u!1 &1948421587
 GameObject:
   m_ObjectHideFlags: 0

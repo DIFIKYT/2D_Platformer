@@ -13,15 +13,30 @@ public class MedkitsSpawner : MonoBehaviour
         SpawnMedkits();
     }
 
+    private void OnEnable()
+    {
+        Player.TakedMedkit += RemoveMedkit;
+    }
+
+    private void OnDisable()
+    {
+        Player.TakedMedkit -= RemoveMedkit;
+    }
+
+    private void RemoveMedkit(Medkit medkit)
+    {
+        medkit.Remove();
+    }
+
     private void SpawnMedkits()
     {
-        List<Transform> medkitSpawnpoints = _medkitSpawnpoints;
+        List<Transform> _spawnpoints = _medkitSpawnpoints;
 
         for (int i = 0; i < _countMedkits; i++)
         {
-            Transform spawnpoint = medkitSpawnpoints[Random.Range(0, medkitSpawnpoints.Count)];
+            Transform spawnpoint = _spawnpoints[Random.Range(0, _spawnpoints.Count)];
             Instantiate(_medkitPrefab, spawnpoint.position, spawnpoint.rotation);
-            medkitSpawnpoints.Remove(spawnpoint);
+            _spawnpoints.Remove(spawnpoint);
         }
     }
 }

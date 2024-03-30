@@ -13,15 +13,30 @@ public class CoinsSpawner : MonoBehaviour
         SpawnCoins();
     }
 
+    private void OnEnable()
+    {
+        Player.TakedCoin += RemoveCoin;
+    }
+
+    private void OnDisable()
+    {
+        Player.TakedCoin -= RemoveCoin;
+    }
+
+    private void RemoveCoin(Coin coin)
+    {
+        coin.Remove();
+    }
+
     private void SpawnCoins()
     {
-        List<Transform> coinSpawnpoints = _coinSpawnpoints;
+        List<Transform> _spawnpoints = _coinSpawnpoints;
 
         for (int i = 0; i < _countCoins; i++)
         {
-            Transform spawnpoint = coinSpawnpoints[Random.Range(0, coinSpawnpoints.Count)];
+            Transform spawnpoint = _spawnpoints[Random.Range(0, _spawnpoints.Count)];
             Instantiate(_coinPrefab, spawnpoint.position, spawnpoint.rotation);
-            coinSpawnpoints.Remove(spawnpoint);
+            _spawnpoints.Remove(spawnpoint);
         }
     }
 }
