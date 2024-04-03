@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class PlayerMover : Mover
 {
-    private const string HorizontalAxis = "Horizontal";
-
     [SerializeField, Min(1)] private float _jumpForce;
     [SerializeField] private Rigidbody2D _rigibody;
 
     private bool _isGrounded;
+    private PlayerInput _playerInput;
     private GroundChecker _groundChecker;
 
     private void Awake()
     {
         _groundChecker = GetComponentInChildren<GroundChecker>();
+        _playerInput = GetComponent<PlayerInput>();
     }
 
     private void OnEnable()
@@ -27,13 +27,13 @@ public class PlayerMover : Mover
 
     public void Move()
     {
-        float moveInput = Input.GetAxis(HorizontalAxis);
+        float moveInput = _playerInput.MoveInput;
         _rigibody.velocity = new Vector2(moveInput * _moveSpeed, _rigibody.velocity.y);
     }
 
     public void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
+        if (_playerInput.IsJumpKeyDown && _isGrounded)
             _rigibody.velocity = new Vector2(_rigibody.velocity.x, _jumpForce);
     }
 

@@ -1,31 +1,22 @@
-using System;
 using UnityEngine;
 
 public class EnemyMover : Mover
 {
-    private const string IsLookRightParameter = "IsLookRight";
+    [SerializeField] private Transform[] _points;
 
-    public Animator _animator;
-    [SerializeField] private Transform _pointA;
-    [SerializeField] private Transform _pointB;
-
-    public static event Action<bool> AnimatedMove;
-
-    private bool _isLookRight = true;
     private Transform _currentTarget;
+    private int _currentPointIndex = 0;
+    private bool _isLookRight = true;
+
+    public bool IsLookRight => _isLookRight;
 
     private void Start()
     {
-        _currentTarget = _pointB;
-        SetTarget(_currentTarget);
+        if (_points.Length > 0)
+            _currentTarget = _points[_currentPointIndex];
     }
 
-    private void Update()
-    {
-        Move();
-    }
-
-    private void Move()
+    public void Move()
     {
         if (Vector2.Distance(transform.position, _currentTarget.position) < 0.01f)
             SwitchTarget();
@@ -36,19 +27,14 @@ public class EnemyMover : Mover
 
     private void SwitchTarget()
     {
-        _currentTarget = (_currentTarget == _pointA) ? _pointB : _pointA;
+        _currentPointIndex = (_currentPointIndex + 1) % _points.Length;
+        _currentTarget = _points[_currentPointIndex];
 
-        SetTarget(_currentTarget);
-        AnimateRun();
+        ChangeDirection(_currentTarget);
     }
 
-    private void SetTarget(Transform target)
+    private void ChangeDirection(Transform target)
     {
-        _isLookRight = (transform.position.x < target.position.x);
-    }
-
-    private void AnimateRun()
-    {
-        _animator.SetBool(IsLookRightParameter, _isLookRight);
+        _isLookRight = transform.position.x < target.position.x;
     }
 }
