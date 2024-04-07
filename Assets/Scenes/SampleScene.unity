@@ -1612,13 +1612,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58fbdb5640acb4b4e8fc12e338e006d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemPrefab: {fileID: 208791535159444006, guid: ae9333064848e184b9ca115de15ccfbb, type: 3}
-  _itemSpawnpoints:
+  _prefab: {fileID: 208791535159444006, guid: ae9333064848e184b9ca115de15ccfbb, type: 3}
+  _spawnpoints:
   - {fileID: 968387372}
   - {fileID: 1563094192}
   - {fileID: 1541022599}
   - {fileID: 1113448405}
   _itemsCount: 2
+  _playerTaker: {fileID: 1066183444}
 --- !u!1 &1092225324
 GameObject:
   m_ObjectHideFlags: 0
@@ -1862,8 +1863,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58fbdb5640acb4b4e8fc12e338e006d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemPrefab: {fileID: 1078388071846922809, guid: d4625c57ae054ea4db9a7cc8759603d4, type: 3}
-  _itemSpawnpoints:
+  _prefab: {fileID: 1078388071846922809, guid: d4625c57ae054ea4db9a7cc8759603d4, type: 3}
+  _spawnpoints:
   - {fileID: 794600739}
   - {fileID: 217495446}
   - {fileID: 1092225325}
@@ -1875,6 +1876,7 @@ MonoBehaviour:
   - {fileID: 231542073}
   - {fileID: 1584388865}
   _itemsCount: 5
+  _playerTaker: {fileID: 1066183444}
 --- !u!1 &1165398556
 GameObject:
   m_ObjectHideFlags: 0
@@ -5998,6 +6000,7 @@ MonoBehaviour:
   _moveSpeed: 5
   _jumpForce: 5
   _rigibody: {fileID: 1838018132}
+  _groundChecker: {fileID: 949072726}
 --- !u!114 &1838018144
 MonoBehaviour:
   m_ObjectHideFlags: 0

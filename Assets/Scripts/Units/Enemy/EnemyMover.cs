@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class EnemyMover : Mover
 {
+    private const float CloseEnoughDistance = 0.01f;
+
     [SerializeField] private Transform[] _points;
 
     private Transform _currentTarget;
@@ -18,7 +20,7 @@ public class EnemyMover : Mover
 
     public void Move()
     {
-        if (Vector2.Distance(transform.position, _currentTarget.position) < 0.01f)
+        if (Vector2.Distance(transform.position, _currentTarget.position) < CloseEnoughDistance)
             SwitchTarget();
 
         Vector2 newPosition = Vector2.MoveTowards(transform.position, _currentTarget.position, _moveSpeed * Time.deltaTime);
@@ -27,7 +29,7 @@ public class EnemyMover : Mover
 
     private void SwitchTarget()
     {
-        _currentPointIndex = (_currentPointIndex + 1) % _points.Length;
+        _currentPointIndex = (++_currentPointIndex) % _points.Length;
         _currentTarget = _points[_currentPointIndex];
 
         ChangeDirection(_currentTarget);

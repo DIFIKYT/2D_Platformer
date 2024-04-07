@@ -1,17 +1,17 @@
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerInput))]
 public class PlayerMover : Mover
 {
     [SerializeField, Min(1)] private float _jumpForce;
     [SerializeField] private Rigidbody2D _rigibody;
+    [SerializeField] private GroundChecker _groundChecker;
 
     private bool _isGrounded;
     private PlayerInput _playerInput;
-    private GroundChecker _groundChecker;
 
     private void Awake()
     {
-        _groundChecker = GetComponentInChildren<GroundChecker>();
         _playerInput = GetComponent<PlayerInput>();
     }
 

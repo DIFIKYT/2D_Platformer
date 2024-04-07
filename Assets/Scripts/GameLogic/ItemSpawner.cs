@@ -1,52 +1,42 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System;
 
 public class ItemSpawner : MonoBehaviour
 {
-    [SerializeField] private Item _itemPrefab;
-    [SerializeField] private List<Transform> _itemSpawnpoints;
+    [SerializeField] private Item _prefab;
+    [SerializeField] private List<Transform> _spawnpoints;
     [SerializeField] private int _itemsCount;
-
-    public static event Action TakedCoin;
-    public static event Action<int> TakedMedkit;
-
-    private PlayerTaker _playerTaker;
-
-    private void Awake()
-    {
-        _playerTaker = FindAnyObjectByType<PlayerTaker>();
-    }
+    [SerializeField] private PlayerTaker _playerTaker;
 
     private void OnEnable()
     {
-        _playerTaker.TakedItem += RemoveItem;
+        _playerTaker.TakedItem += Remove;
     }
 
     private void OnDisable()
     {
-        _playerTaker.TakedItem -= RemoveItem;
+        _playerTaker.TakedItem -= Remove;
     }
 
     private void Start()
     {
-        SpawnItems();
+        Spawn();
     }
 
-    private void RemoveItem(Item item)
+    private void Remove(Item item)
     {
         item.Remove();
     }
 
-    private void SpawnItems()
+    private void Spawn()
     {
-        List<Transform> _spawnpoints = _itemSpawnpoints;
+        List<Transform> spawnpoints = _spawnpoints;
 
         for (int i = 0; i < _itemsCount; i++)
         {
-            Transform spawnpoint = _spawnpoints[UnityEngine.Random.Range(0, _spawnpoints.Count)];
-            Instantiate(_itemPrefab, spawnpoint.position, spawnpoint.rotation);
-            _spawnpoints.Remove(spawnpoint);
+            Transform spawnpoint = spawnpoints[Random.Range(0, spawnpoints.Count)];
+            Instantiate(_prefab, spawnpoint.position, spawnpoint.rotation);
+            spawnpoints.Remove(spawnpoint);
         }
     }
 }

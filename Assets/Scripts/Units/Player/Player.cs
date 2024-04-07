@@ -9,13 +9,13 @@ public class Player : Character
 
     private void OnEnable()
     {
-        _playerTaker.TakedCoin += TakeCoin;
+        _playerTaker.TakedCoin += OnTakedCoin;
         _playerTaker.TakedMedkit += UseMedkit;
     }
 
     private void OnDisable()
     {
-        _playerTaker.TakedCoin -= TakeCoin;
+        _playerTaker.TakedCoin -= OnTakedCoin;
         _playerTaker.TakedMedkit -= UseMedkit;
     }
 
@@ -27,15 +27,15 @@ public class Player : Character
     private void FixedUpdate()
     {
         _playerMover.Move();
+        _playerMover.Jump();
     }
 
     private void Update()
     {
-        _playerMover.Jump();
         _playerAnimation.AnimateMove();
     }
 
-    private void TakeCoin()
+    private void OnTakedCoin()
     {
         _playerBag.TakeCoin();
     }

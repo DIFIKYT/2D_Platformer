@@ -6,8 +6,8 @@ public class Health : MonoBehaviour
 
     public int MaxHealth => _maxHealth;
     public int CurrentHealth { get; private set; }
-    public bool IsAlive { get; private set; }
-    public bool IsHealthMaximum { get; private set; }
+    public bool IsAlive => CurrentHealth > 0;
+    public bool IsHealthMaximum => CurrentHealth >= MaxHealth;
 
     private void Awake()
     {
@@ -16,17 +16,20 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        if(amount <= 0) return;
+        if(amount <= 0)
+            return;
 
         CurrentHealth -= amount;
-        IsAlive = CurrentHealth > 0;
+
+        if(IsAlive == false)
+            CurrentHealth = 0;
     }
 
     public void RestoreHealth(int amount)
     {
-        if (amount <= 0) return;
+        if (amount <= 0)
+            return;
 
-        CurrentHealth = amount > (MaxHealth - CurrentHealth) ? MaxHealth : (CurrentHealth + amount);
-        IsHealthMaximum = CurrentHealth >= MaxHealth;
+        CurrentHealth = Mathf.Clamp(CurrentHealth + amount, 0, MaxHealth);
     }
 }
