@@ -18,11 +18,13 @@ public class PlayerMover : Mover
     private void OnEnable()
     {
         _groundChecker.Grounded += SetGrounded;
+        _playerInput.JumpKeyPressed += Jump;
     }
 
     private void OnDisable()
     {
         _groundChecker.Grounded -= SetGrounded;
+        _playerInput.JumpKeyPressed -= Jump;
     }
 
     public void Move()
@@ -33,7 +35,7 @@ public class PlayerMover : Mover
 
     public void Jump()
     {
-        if (_playerInput.IsJumpKeyDown && _isGrounded)
+        if (_isGrounded)
             _rigibody.velocity = new Vector2(_rigibody.velocity.x, _jumpForce);
     }
 

@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerInput))]
 public class Player : Character
 {
     [SerializeField] private PlayerBag _playerBag;
@@ -27,7 +28,6 @@ public class Player : Character
     private void FixedUpdate()
     {
         _playerMover.Move();
-        _playerMover.Jump();
     }
 
     private void Update()
