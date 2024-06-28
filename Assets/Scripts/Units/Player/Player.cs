@@ -22,7 +22,7 @@ public class Player : Character
 
     private void Start()
     {
-        ViewInfo.DisplayHealth(_name, _health.CurrentHealth);
+        ViewInfo.DisplayHealth(_name, _health.CurrentAmount);
     }
 
     private void FixedUpdate()
