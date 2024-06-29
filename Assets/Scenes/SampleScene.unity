@@ -805,7 +805,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e234a259b7cd09946af58c2fee258604, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damageAmount: 25
+  _damageAmount: 20
 --- !u!1 &471468301
 GameObject:
   m_ObjectHideFlags: 0
@@ -1248,7 +1248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e234a259b7cd09946af58c2fee258604, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damageAmount: 30
+  _damageAmount: 15
 --- !u!1 &643661709
 GameObject:
   m_ObjectHideFlags: 0
@@ -4043,6 +4043,18 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4284257976888615034, guid: 4f20e95d7c3bec149b33e97eb45371b1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6726898836768389254, guid: 4f20e95d7c3bec149b33e97eb45371b1, type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6726898836768389254, guid: 4f20e95d7c3bec149b33e97eb45371b1, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 7586522043807862779, guid: 4f20e95d7c3bec149b33e97eb45371b1, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4122,6 +4134,10 @@ PrefabInstance:
     - target: {fileID: 7586522043807862779, guid: 4f20e95d7c3bec149b33e97eb45371b1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7844051135837044624, guid: 4f20e95d7c3bec149b33e97eb45371b1, type: 3}
+      propertyPath: m_Value
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
