@@ -3,20 +3,57 @@ using UnityEngine;
 
 public class Vampirism : MonoBehaviour
 {
-    private bool _isActivate = false;
+    [SerializeField] private PlayerInput _playerInput;
+    [SerializeField] private float _actionTime = 6f;
+    [SerializeField] private int _damageAmount = 1;
 
-    private void Update()
+    private bool _isActive = false;
+
+    private void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
+        _spriteRenderer.enabled = false;
+        _circleCollider.enabled = false;
+    }
 
+    private void OnEnable()
+    {
+        _playerInput.VampirismKeyPressed += Use;
+    }
+
+    private void OnDisable()
+    {
+        _playerInput.VampirismKeyPressed -= Use;
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (_isActive)
+        {
+            if (collision.TryGetComponent<Enemy>(out Enemy enemy))
+            {
+                enemy.TakeDamage(_damageAmount);
+            }
         }
     }
 
-    private IEnumerator ActiveCorutine()
+    private void Use()
     {
+        StartCoroutine(ActiveCoroutine());
+    }
 
+    private IEnumerator ActiveCoroutine()
+    {
+        var actionTime = new WaitForSeconds(_actionTime);
 
-        yield return null;
+        SwitchMode(true);
+        yield return actionTime;
+        SwitchMode(false);
+    }
+
+    private void SwitchMode(bool isEnabled)
+    {
+        _isActive = isEnabled;
+        this.gameObject.SetActive();
+        _circleCollider.enabled = isEnabled;
     }
 }
