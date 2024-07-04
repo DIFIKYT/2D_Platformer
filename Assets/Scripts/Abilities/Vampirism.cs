@@ -11,8 +11,7 @@ public class Vampirism : MonoBehaviour
 
     private void Awake()
     {
-        _spriteRenderer.enabled = false;
-        _circleCollider.enabled = false;
+        _playerInput.gameObject.SetActive(false);
     }
 
     private void OnEnable()
@@ -53,7 +52,6 @@ public class Vampirism : MonoBehaviour
     private void SwitchMode(bool isEnabled)
     {
         _isActive = isEnabled;
-        this.gameObject.SetActive();
-        _circleCollider.enabled = isEnabled;
+        _playerInput.gameObject.SetActive(isEnabled);
     }
 }
