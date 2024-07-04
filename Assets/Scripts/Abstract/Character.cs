@@ -16,8 +16,6 @@ public abstract class Character : MonoBehaviour
             Die();
             return;
         }
-
-        ViewInfo.DisplayHealth(_name, _health.CurrentAmount);
     }
 
     public void RestoreHealth(int healingPower)
@@ -26,11 +24,8 @@ public abstract class Character : MonoBehaviour
 
         if (_health.IsMaximum)
         {
-            ViewInfo.DisplayMaximumHealth(_health.CurrentAmount);
             return;
         }
-
-        ViewInfo.DisplayHealth(_name, _health.CurrentAmount);
     }
 
     private void Die()

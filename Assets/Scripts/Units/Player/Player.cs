@@ -20,11 +20,6 @@ public class Player : Character
         _playerTaker.TakedMedkit -= UseMedkit;
     }
 
-    private void Start()
-    {
-        ViewInfo.DisplayHealth(_name, _health.CurrentAmount);
-    }
-
     private void FixedUpdate()
     {
         _playerMover.Move();

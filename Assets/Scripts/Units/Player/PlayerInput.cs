@@ -26,6 +26,6 @@ public class PlayerInput : MonoBehaviour
 
         _moveInput = Input.GetAxis(HorizontalAxis);
         _isJumpKeyDown = Input.GetKeyDown(KeyCode.Space);
-        _isVampirismKeyDown = Input.GetKey(KeyCode.Q);
+        _isVampirismKeyDown = Input.GetKeyDown(KeyCode.Q);
     }
 }

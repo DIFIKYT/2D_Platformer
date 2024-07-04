@@ -5,11 +5,6 @@ public class Enemy : Character
     [SerializeField] private EnemyMover _enemyMover;
     [SerializeField] private EnemyAnimation _enemyAnimation;
 
-    private void Start()
-    {
-        ViewInfo.DisplayHealth(_name, _health.CurrentAmount);
-    }
-
     private void FixedUpdate()
     {
         _enemyMover.Move();

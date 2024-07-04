@@ -1,17 +1,25 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Vampirism : MonoBehaviour
 {
+    [SerializeField] private Player _player;
     [SerializeField] private PlayerInput _playerInput;
-    [SerializeField] private float _actionTime = 6f;
-    [SerializeField] private int _damageAmount = 1;
+    [SerializeField] private CircleCollider2D _circleCollider;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private float _actionTime;
+    [SerializeField] private int _powerAmount;
+    [SerializeField] private float _damageInterval;
 
     private bool _isActive = false;
+    private List<Enemy> _enemiesInArea = new();
+    private Coroutine _pumpingHealthCoroutine;
 
     private void Awake()
     {
-        _playerInput.gameObject.SetActive(false);
+        _spriteRenderer.enabled = _isActive;
+        _circleCollider.enabled = _isActive;
     }
 
     private void OnEnable()
@@ -24,15 +32,16 @@ public class Vampirism : MonoBehaviour
         _playerInput.VampirismKeyPressed -= Use;
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (_isActive)
-        {
-            if (collision.TryGetComponent<Enemy>(out Enemy enemy))
-            {
-                enemy.TakeDamage(_damageAmount);
-            }
-        }
+        if (collision.TryGetComponent<Enemy>(out Enemy enemy))
+            _enemiesInArea.Add(enemy);
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent<Enemy>(out Enemy enemy))
+            _enemiesInArea.Remove(enemy);
     }
 
     private void Use()
@@ -49,9 +58,39 @@ public class Vampirism : MonoBehaviour
         SwitchMode(false);
     }
 
+    private IEnumerator PumpingHealthCoroutine()
+    {
+        var damageInterval = new WaitForSeconds(_damageInterval);
+
+        while (_isActive)
+        {
+            foreach (Enemy enemy in _enemiesInArea)
+            {
+                enemy.TakeDamage(_powerAmount);
+                _player.RestoreHealth(_powerAmount);
+            }
+
+            yield return damageInterval;
+        }
+    }
+
     private void SwitchMode(bool isEnabled)
     {
         _isActive = isEnabled;
-        _playerInput.gameObject.SetActive(isEnabled);
+        _spriteRenderer.enabled = isEnabled;
+        _circleCollider.enabled = isEnabled;
+
+        if (isEnabled)
+        {
+            _pumpingHealthCoroutine = StartCoroutine(PumpingHealthCoroutine());
+        }
+        else
+        {
+            if (_pumpingHealthCoroutine != null)
+            {
+                StopCoroutine(_pumpingHealthCoroutine);
+                _pumpingHealthCoroutine = null;
+            }
+        }
     }
 }
