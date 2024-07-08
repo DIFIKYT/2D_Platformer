@@ -23,10 +23,10 @@ public class SmoothHealthBar : HealthView
         if (_currentSmoothCoroutine != null)
             StopCoroutine(_currentSmoothCoroutine);
 
-        _currentSmoothCoroutine = StartCoroutine(SmoothUpdateHealth());
+        _currentSmoothCoroutine = StartCoroutine(SmoothUpdate());
     }
 
-    private IEnumerator SmoothUpdateHealth()
+    private IEnumerator SmoothUpdate()
     {
         while (_healthBar.value != _targetHealth)
         {
