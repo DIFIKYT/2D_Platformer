@@ -1439,6 +1439,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: {fileID: 1838018140}
+  _character: {fileID: 1838018144}
   _healthBar: {fileID: 610244776}
   _smoothSpeed: 1
 --- !u!114 &610244776 stripped
@@ -4144,6 +4145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: {fileID: 123049420}
+  _character: {fileID: 123049419}
   _healthBar: {fileID: 1166526116}
   _smoothSpeed: 1
 --- !u!114 &1166526116 stripped
@@ -4349,6 +4351,7 @@ MonoBehaviour:
   _vampirism: {fileID: 1417098222}
   _progressBar: {fileID: 1328451870}
   _smoothSpeed: 0.17
+  _character: {fileID: 1838018144}
 --- !u!114 &1328451870 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7844051135837044624, guid: 4f20e95d7c3bec149b33e97eb45371b1, type: 3}
@@ -7457,6 +7460,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: {fileID: 471468314}
+  _character: {fileID: 471468313}
   _healthBar: {fileID: 1879970993}
   _smoothSpeed: 1
 --- !u!114 &1879970993 stripped

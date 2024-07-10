@@ -7,6 +7,7 @@ public class SmoothBarVampirism : MonoBehaviour
     [SerializeField] private Vampirism _vampirism;
     [SerializeField] private Slider _progressBar;
     [SerializeField] private float _smoothSpeed;
+    [SerializeField] private Character _character;
 
     private Coroutine _activeCoroutine = null;
 
@@ -14,12 +15,14 @@ public class SmoothBarVampirism : MonoBehaviour
     {
         _vampirism.VampirismActivated += Activate;
         _vampirism.CooldownStarted += Activate;
+        _character.Died += Destroy;
     }
 
     private void OnDisable()
     {
         _vampirism.VampirismActivated -= Activate;
         _vampirism.CooldownStarted -= Activate;
+        _character.Died -= Destroy;
     }
 
     private void Activate(bool isActive)
@@ -39,5 +42,10 @@ public class SmoothBarVampirism : MonoBehaviour
             _progressBar.value = Mathf.MoveTowards(_progressBar.value, value, _smoothSpeed * Time.deltaTime);
             yield return null;
         }
+    }
+
+    private void Destroy()
+    {
+        Destroy(gameObject);
     }
 }

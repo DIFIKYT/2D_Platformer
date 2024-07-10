@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public abstract class Character : MonoBehaviour
@@ -5,6 +6,8 @@ public abstract class Character : MonoBehaviour
     [SerializeField] protected string _name;
     [SerializeField] protected Health _health;
     [SerializeField] private SmoothHealthBar _healthBar;
+
+    public event Action Died;
 
     public void TakeDamage(int damageAmount)
     {
@@ -23,14 +26,12 @@ public abstract class Character : MonoBehaviour
         _health.Restore(healingPower);
 
         if (_health.IsMaximum)
-        {
             return;
-        }
     }
 
     private void Die()
     {
-        Destroy(_healthBar.gameObject);
+        Died?.Invoke();
         Destroy(gameObject);
     }
 }
