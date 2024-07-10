@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField, Min(1)] private int _maxAmount;
+    [SerializeField, Min(1)] private float _maxAmount;
 
-    public event Action<float> Changed;
+    public event Action Changed;
 
-    public int MaxAmount => _maxAmount;
-    public int CurrentAmount { get; private set; }
+    public float MaxAmount => _maxAmount;
+    public float CurrentAmount { get; private set; }
     public bool IsAlive => CurrentAmount > 0;
     public bool IsMaximum => CurrentAmount >= MaxAmount;
 
@@ -27,7 +27,7 @@ public class Health : MonoBehaviour
         if (IsAlive == false)
             CurrentAmount = 0;
 
-        Changed?.Invoke(CurrentAmount);
+        Changed?.Invoke();
     }
 
     public void Restore(int amount)
@@ -37,6 +37,6 @@ public class Health : MonoBehaviour
 
         CurrentAmount = Mathf.Clamp(CurrentAmount + amount, 0, MaxAmount);
 
-        Changed?.Invoke(CurrentAmount);
+        Changed?.Invoke();
     }
 }

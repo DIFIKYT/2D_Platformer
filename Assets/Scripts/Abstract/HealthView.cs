@@ -18,8 +18,8 @@ public abstract class HealthView : MonoBehaviour
 
     protected void Start()
     {
-        View(_health.CurrentAmount);
+        View();
     }
 
-    protected abstract void View(float amount);
+    protected abstract void View();
 }

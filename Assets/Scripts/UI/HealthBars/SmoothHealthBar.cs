@@ -5,21 +5,17 @@ using System.Collections;
 public class SmoothHealthBar : HealthView
 {
     [SerializeField] private Slider _healthBar;
-    [SerializeField] private float _smoothSpeed = 100f;
+    [SerializeField] private float _smoothSpeed;
 
-    private float _targetHealth;
     private Coroutine _currentSmoothCoroutine;
 
     private void Awake()
     {
-        _targetHealth = Health.MaxAmount;
-        _healthBar.value = Health.MaxAmount;
+        _healthBar.value = _healthBar.maxValue;
     }
 
-    protected override void View(float amount)
+    protected override void View()
     {
-        _targetHealth = amount;
-
         if (_currentSmoothCoroutine != null)
             StopCoroutine(_currentSmoothCoroutine);
 
@@ -28,9 +24,11 @@ public class SmoothHealthBar : HealthView
 
     private IEnumerator SmoothUpdate()
     {
-        while (_healthBar.value != _targetHealth)
+        float targetValue = Health.CurrentAmount / Health.MaxAmount;
+
+        while (_healthBar.value != targetValue)
         {
-            _healthBar.value = Mathf.MoveTowards(_healthBar.value, _targetHealth, _smoothSpeed * Time.deltaTime);
+            _healthBar.value = Mathf.MoveTowards(_healthBar.value, targetValue, _smoothSpeed * Time.deltaTime);
             yield return null;
         }
     }

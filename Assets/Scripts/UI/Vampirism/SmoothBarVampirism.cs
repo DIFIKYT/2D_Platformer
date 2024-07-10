@@ -1,10 +1,3 @@
-//using UnityEngine;
-
-//public class SmoothBarVampirism : MonoBehaviour
-//{
-
-//}
-
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,47 +5,38 @@ using UnityEngine.UI;
 public class SmoothBarVampirism : MonoBehaviour
 {
     [SerializeField] private Vampirism _vampirism;
-    [SerializeField] private Slider _progressBar; // UI Slider для отображения бара
+    [SerializeField] private Slider _progressBar;
+    [SerializeField] private float _smoothSpeed;
 
-    private Coroutine _updateBarCoroutine = null;
+    private Coroutine _activeCoroutine = null;
 
     private void OnEnable()
     {
-        _vampirism.OnActionStart += StartActionBar;
-        _vampirism.OnCooldownStart += StartCooldownBar;
+        _vampirism.VampirismActivated += Activate;
+        _vampirism.CooldownStarted += Activate;
     }
 
     private void OnDisable()
     {
-        _vampirism.OnActionStart -= StartActionBar;
-        _vampirism.OnCooldownStart -= StartCooldownBar;
+        _vampirism.VampirismActivated -= Activate;
+        _vampirism.CooldownStarted -= Activate;
     }
 
-    private void StartActionBar(float duration)
+    private void Activate(bool isActive)
     {
-        if (_updateBarCoroutine != null)
-        {
-            StopCoroutine(_updateBarCoroutine);
-        }
-        _updateBarCoroutine = StartCoroutine(UpdateBar(duration, false));
+        if (_activeCoroutine != null)
+            StopCoroutine(_activeCoroutine);
+
+        _activeCoroutine = StartCoroutine(UpdateBar(isActive));
     }
 
-    private void StartCooldownBar(float duration)
+    private IEnumerator UpdateBar(bool isActive)
     {
-        if (_updateBarCoroutine != null)
-        {
-            StopCoroutine(_updateBarCoroutine);
-        }
-        _updateBarCoroutine = StartCoroutine(UpdateBar(duration, true));
-    }
+        float value = isActive ? _progressBar.minValue : _progressBar.maxValue;
 
-    private IEnumerator UpdateBar(float duration, bool isCooldown)
-    {
-        float elapsed = 0f;
-        while (elapsed < duration)
+        while (_progressBar.value != value)
         {
-            elapsed += Time.deltaTime;
-            _progressBar.value = isCooldown ? (elapsed / duration) * _progressBar.maxValue : _progressBar.maxValue - (elapsed / duration) * _progressBar.maxValue;
+            _progressBar.value = Mathf.MoveTowards(_progressBar.value, value, _smoothSpeed * Time.deltaTime);
             yield return null;
         }
     }
