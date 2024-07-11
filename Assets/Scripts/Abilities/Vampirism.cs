@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Vampirism : MonoBehaviour
@@ -9,7 +8,7 @@ public class Vampirism : MonoBehaviour
     [SerializeField] private PlayerInput _playerInput;
     [SerializeField] private CircleCollider2D _circleCollider;
     [SerializeField] private SpriteRenderer _spriteRenderer;
-    [SerializeField] private int _powerAmount;
+    [SerializeField] private float _powerAmount;
     [SerializeField] private float _cooldownTime;
     [SerializeField] private float _actionTime;
     [SerializeField] private float _damageInterval;
@@ -19,7 +18,7 @@ public class Vampirism : MonoBehaviour
 
     private bool _isCooldown = false;
     private bool _isActive = false;
-    private List<Enemy> _enemiesInArea = new();
+    private Enemy _enemy = null;
     private Coroutine _pumpingHealthCoroutine = null;
 
     private void Awake()
@@ -40,14 +39,14 @@ public class Vampirism : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<Enemy>(out Enemy enemy))
-            _enemiesInArea.Add(enemy);
+        if (collision.TryGetComponent(out Enemy enemy))
+            _enemy = enemy;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<Enemy>(out Enemy enemy))
-            _enemiesInArea.Remove(enemy);
+        if (collision.TryGetComponent(out Enemy enemy))
+            _enemy = null;
     }
 
     private void Use()
@@ -102,10 +101,11 @@ public class Vampirism : MonoBehaviour
 
         while (_isActive)
         {
-            foreach (Enemy enemy in _enemiesInArea)
+            if (_enemy != null)
             {
-                enemy.TakeDamage(_powerAmount);
-                _player.RestoreHealth(_powerAmount);
+                float actualDamage = Mathf.Min(_powerAmount, _enemy.Health.CurrentAmount);
+                _player.RestoreHealth(actualDamage);
+                _enemy.TakeDamage(actualDamage);
             }
 
             yield return damageInterval;

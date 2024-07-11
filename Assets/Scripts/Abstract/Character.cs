@@ -9,7 +9,9 @@ public abstract class Character : MonoBehaviour
 
     public event Action Died;
 
-    public void TakeDamage(int damageAmount)
+    public Health Health => _health;
+
+    public void TakeDamage(float damageAmount)
     {
         _health.Reduce(damageAmount);
 
@@ -21,7 +23,7 @@ public abstract class Character : MonoBehaviour
         }
     }
 
-    public void RestoreHealth(int healingPower)
+    public void RestoreHealth(float healingPower)
     {
         _health.Restore(healingPower);
 

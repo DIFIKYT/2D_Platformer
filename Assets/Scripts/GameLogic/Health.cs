@@ -17,7 +17,7 @@ public class Health : MonoBehaviour
         CurrentAmount = _maxAmount;
     }
 
-    public void Reduce(int amount)
+    public void Reduce(float amount)
     {
         if (amount <= 0)
             return;
@@ -30,7 +30,7 @@ public class Health : MonoBehaviour
         Changed?.Invoke();
     }
 
-    public void Restore(int amount)
+    public void Restore(float amount)
     {
         if (amount <= 0)
             return;
